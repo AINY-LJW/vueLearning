@@ -33,5 +33,25 @@ module.exports = merge(webpackBaseConfig, {
             template: './src/template/index.ejs',
             inject: false
         })
-    ]
+    ],
+    devServer: { 
+        host: '127.0.0.1',
+        // 修改启动端口号   也可以在npm dev启动参数中修改
+        port: 9001,
+        // 代理  在开发模式中可以使用Eurake代理，因为没有跨域，所以可以正常使用，生产环境需要换成nginx或者Zuul代理
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8888/',
+                secure: false,
+                changeOrigin: true,
+                pathRewrite: {'^/api' : '/'},
+            },
+            '/api2': {
+                target: 'http://localhost:8889/',
+                secure: false,
+                changeOrigin: true,
+                pathRewrite: {'^/api2' : '/'},
+            }
+        }
+    }
 });

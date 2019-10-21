@@ -14,17 +14,24 @@ import {VTable, VPagination} from 'vue-easytable'
 import axios from 'axios'
 //引入ECharts
 import echarts from 'echarts'
+// 自定义组件全局组件
+import Datecomp from './components';
+import Store from './store';
 
 Vue.prototype.$ajax = axios
+// 阻止启动生产消息 
 Vue.config.productionTip = false
 Vue.component(VTable.name, VTable)
 Vue.component(VPagination.name, VPagination)
 Vue.prototype.$echarts = echarts
 
+// 使用组件
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
 Vue.use(iView);
+// 使用自定义全局组件
+Vue.use(Datecomp);
 
 
 
@@ -71,7 +78,7 @@ var vm=new Vue({
     //el就是 DOM 元素中的 id  <div id = "app"></div>
     el: '#app',
     router: router,
-    store: store,
+    store: Store,
     data: {
         counter: 1
     },
